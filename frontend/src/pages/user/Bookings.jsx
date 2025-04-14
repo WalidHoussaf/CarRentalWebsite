@@ -81,12 +81,12 @@ const Bookings = () => {
     
     // Option definitions with prices - exact values from the screenshot with only the 6 options shown
     const optionDefinitions = {
-      'additional_driver': { id: 'additional_driver', name: 'Additional Driver', price: 30.00 },
-      'wifi': { id: 'wifi', name: 'WiFi Hotspot', price: 15.00 },
-      'child_seat': { id: 'child_seat', name: 'Child Seat', price: 25.00 },
+      'roadside_assistance': { id: 'roadside_assistance', name: 'Roadside Assistance', price: 25.00 },
+      'wifi': { id: 'wifi', name: 'WiFi Hotspot', price: 20.00 },
+      'child_seat': { id: 'child_seat', name: 'Child Seat', price: 15.00 },
       'gps': { id: 'gps', name: 'GPS Navigation', price: 15.00 },
       'insurance': { id: 'insurance', name: 'Premium Insurance', price: 45.00 },
-      'professional_driver': { id: 'professional_driver', name: 'Professional Driver', price: 120.00 }
+      'driver': { id: 'driver', name: 'Professional Driver', price: 120.00 }
     };
     
     // If options is a string, try to parse it
@@ -448,7 +448,7 @@ const Bookings = () => {
               className="relative px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white transition-all duration-300 shadow-lg hover:shadow-cyan-700/20 rounded-md cursor-pointer overflow-hidden group font-['Orbitron']"
             >
               <span className="relative z-10">{t('exploreCars')}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <span className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md"></span>
             </Link>
           </div>
         )}

@@ -89,8 +89,8 @@ const BookingConfirmation = () => {
     { id: 'driver', name: 'Chauffeur Professionnel', price: 120 },
     { id: 'gps', name: 'Navigation GPS', price: 15 },
     { id: 'wifi', name: 'Hotspot Wi-Fi Mobile', price: 20 },
-    { id: 'child_seat', name: 'Siège Enfant', price: 25 },
-    { id: 'additional_driver', name: 'Conducteur Supplémentaire', price: 30 }
+    { id: 'child_seat', name: 'Siège Enfant', price: 15 },
+    { id: 'roadside_assistance', name: 'Assistance Routière', price: 25 }
   ];
 
   // Resolve car image

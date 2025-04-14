@@ -58,6 +58,18 @@ const AdditionalDriverIcon = () => (
   </svg>
 );
 
+const RoadsideAssistanceIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+    <path d="M7 4h10l2 5h-14z" className="fill-transparent stroke-current stroke-1" strokeWidth="1.2" />
+    <path d="M4 9h16v4h-16z" className="fill-transparent stroke-current stroke-1" strokeWidth="1.2" />
+    <circle cx="8" cy="18" r="2" className="fill-transparent stroke-current stroke-1" strokeWidth="1.2" />
+    <circle cx="16" cy="18" r="2" className="fill-transparent stroke-current stroke-1" strokeWidth="1.2" />
+    <path d="M10 18h4" className="stroke-current stroke-1" strokeWidth="1.2" />
+    <path d="M14 4l1 4M10 4l-1 4" className="stroke-current stroke-1" strokeWidth="1.2" strokeLinecap="round" />
+    <path d="M6 13h2m4 0h2m4 0h2" className="stroke-current stroke-1" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+
 const getOptionIcon = (iconId) => {
   switch(iconId) {
     case 'insurance': return <InsuranceIcon />;
@@ -66,6 +78,7 @@ const getOptionIcon = (iconId) => {
     case 'wifi': return <WifiIcon />;
     case 'child_seat': return <ChildSeatIcon />;
     case 'additional_driver': return <AdditionalDriverIcon />;
+    case 'roadside_assistance': return <RoadsideAssistanceIcon />;
     default: return null;
   }
 };
@@ -108,15 +121,15 @@ const BookingOption = ({ car, bookingDetails, onOptionSelection, onPreviousStep 
       id: 'child_seat', 
       name: t('option_child_seat'), 
       description: t('option_child_seat_desc'), 
-      price: 25,
+      price: 15,
       icon: 'child_seat'
     },
     { 
-      id: 'additional_driver', 
-      name: t('option_additional_driver'), 
-      description: t('option_additional_driver_desc'), 
-      price: 30,
-      icon: 'additional_driver'
+      id: 'roadside_assistance', 
+      name: t('option_roadside_assistance'), 
+      description: t('option_roadside_assistance_desc'), 
+      price: 25,
+      icon: 'roadside_assistance'
     }
   ];
   

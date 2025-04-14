@@ -198,60 +198,60 @@ export const assets = {
     data: {
         featuredCars: [
             {
-                id: 1,
-                name: "Tesla Cybertruck",
-                category: "Electric",
-                price: 199,
-                image: "cars.tesla", 
-                features: ["Autopilot", "0-60 in 2.6s", "340mi Range", " 350 kW DC fast charging", " Driver Assistance "],
+                id: 10,
+                name: "Lamborghini Urus",
+                category: "Luxury SUV",
+                price: 550,
+                image: "cars.car10", 
+                features: ["650 horsepower", "V8 Twin-Turbo", "Carbon ceramic brakes", "Adaptive air suspension", "Driver Assistance"],
                 specifications: {
-                    engine: "Tri-Motor Electric",
-                    power: "845 hp",
-                    torque: "930 lb-ft",
-                    acceleration: "0-60 mph in 2.6s",
-                    range: "340 miles",
+                    engine: "4.0L Twin-Turbo V8",
+                    power: "650 hp",
+                    torque: "627 lb-ft",
+                    acceleration: "0-60 mph in 3.5s",
+                    fuelEconomy: "14 mpg combined",
                     seatingCapacity: 5,
-                    luggage: 3,
-                    doors: 4,
-                    transmission: "Single-Speed"
-                }
-            },
-            {
-                id: 2,
-                name: "BMW i7",
-                category: "Hybrid Sport",
-                price: 299,
-                image: "cars.bmw",
-                features: ["544 horsepower", "0 to 100 in 4.7 seconds", "Leather Seats", "Panoramic Roof", "Driver Assistance"],
-                specifications: {
-                    engine: "3.0L Inline-6 with Electric Motor",
-                    power: "544 hp",
-                    torque: "553 lb-ft",
-                    acceleration: "0-60 mph in 4.5s",
-                    range: "50 miles (electric only)",
-                    seatingCapacity: 5,
-                    luggage: 3,
-                    doors: 4,
+                    luggage: 4,
+                    doors: 5,
                     transmission: "8-Speed Automatic"
                 }
             },
             {
-                id: 3,
-                name: "Mercedes G-Class",
-                category: "Luxury SUV",
-                price: 349,
-                image: "cars.mercedes",
-                features: ["Off-Road Ready", "416hp V8", "Premium Interior", "9-Speed Auto", "Driver Assistance"],
+                id: 12,
+                name: "Ferrari Roma",
+                category: "Sport",
+                price: 650,
+                image: "cars.car12",
+                features: ["620 horsepower V8", "8-speed dual-clutch", "Carbon fiber components", "Manettino dial", "Leather interior"],
                 specifications: {
-                    engine: "4.0L Biturbo V8",
-                    power: "416 hp",
-                    torque: "450 lb-ft",
-                    acceleration: "0-60 mph in 5.6s",
+                    engine: "3.9L Twin-Turbo V8",
+                    power: "620 hp",
+                    torque: "561 lb-ft",
+                    acceleration: "0-60 mph in 3.4s",
                     fuelEconomy: "17 mpg combined",
-                    seatingCapacity: 5,
-                    luggage: 4,
-                    doors: 5,
-                    transmission: "9-Speed Automatic"
+                    seatingCapacity: 4,
+                    luggage: 2,
+                    doors: 2,
+                    transmission: "8-Speed Dual-Clutch"
+                }
+            },
+            {
+                id: 14,
+                name: "McLaren 720S",
+                category: "Sport",
+                price: 700,
+                image: "cars.car14",
+                features: ["710 horsepower", "Carbon fiber chassis", "Active dynamics panel", "Variable drift control", "Lightweight design"],
+                specifications: {
+                    engine: "4.0L Twin-Turbo V8",
+                    power: "710 hp",
+                    torque: "568 lb-ft",
+                    acceleration: "0-60 mph in 2.8s",
+                    fuelEconomy: "18 mpg combined",
+                    seatingCapacity: 2,
+                    luggage: 1,
+                    doors: 2,
+                    transmission: "7-Speed Dual-Clutch"
                 }
             }
         ],

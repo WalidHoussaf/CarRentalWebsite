@@ -112,6 +112,7 @@ const Booking = () => {
     setBookingDetails(prev => ({
       ...prev,
       options,
+      optionsPrice: additionalPrice,
       totalPrice: basePrice + additionalPrice
     }));
     

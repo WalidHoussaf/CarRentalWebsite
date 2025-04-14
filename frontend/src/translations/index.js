@@ -493,8 +493,8 @@ export const translations = {
     option_wifi_desc: "Stay connected during your journey",
     option_child_seat: "Child Seat",
     option_child_seat_desc: "Safe and comfortable child seat",
-    option_additional_driver: "Additional Driver",
-    option_additional_driver_desc: "Register an additional driver",
+    option_roadside_assistance: "Roadside Assistance",
+    option_roadside_assistance_desc: "24/7 emergency roadside support",
     
     // Booking additional translations
     enhanceExperience: "Enhance Your Experience",
@@ -1075,8 +1075,8 @@ export const translations = {
     option_wifi_desc: "Restez connecté pendant votre voyage",
     option_child_seat: "Siège Enfant",
     option_child_seat_desc: "Siège enfant sûr et confortable",
-    option_additional_driver: "Conducteur Supplémentaire",
-    option_additional_driver_desc: "Enregistrez un conducteur supplémentaire",
+    option_roadside_assistance: "Assistance Routière",
+    option_roadside_assistance_desc: "Assistance routière d'urgence 24/7",
     
     // Booking additional translations
     enhanceExperience: "Améliorez Votre Expérience",

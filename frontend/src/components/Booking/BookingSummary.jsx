@@ -131,8 +131,8 @@ const BookingSummary = ({ car, bookingDetails, bookingStep, onSubmit, onPrevious
     { id: 'driver', name: t('option_driver'), price: 120 },
     { id: 'gps', name: t('option_gps'), price: 15 },
     { id: 'wifi', name: t('option_wifi'), price: 20 },
-    { id: 'child_seat', name: t('option_child_seat'), price: 25 },
-    { id: 'additional_driver', name: t('option_additional_driver'), price: 30 }
+    { id: 'child_seat', name: t('option_child_seat'), price: 15 },
+    { id: 'roadside_assistance', name: t('option_roadside_assistance'), price: 25 }
   ];
   
   // Handle form submission

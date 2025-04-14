@@ -1,5 +1,4 @@
 import React, { useState, useEffect} from 'react';
-import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { assets, resolveImagePaths } from '../assets/assets';
 import HowItWorks from '../components/Home/HowItWorks';
@@ -16,18 +15,6 @@ const HomePage = () => {
   const { language } = useLanguage();
   const t = useTranslations(language);
   
-  // Location Options 
-  const locationOptions = [
-    { value: "", label: t('selectLocation'), disabled: true },
-    { value: "mohammedia", label: "Mohammedia" },
-    { value: "casablanca", label: "Casablanca" },
-    { value: "marrakesh", label: "Marrakesh" },
-    { value: "kenitra", label: "Kénitra" },
-    { value: "rabat", label: "Rabat" },
-    { value: "agadir", label: "Agadir" },
-    { value: "tangier", label: "Tangier" },
-  ];
-
   // Hero Slides Captions 
   const heroMessages = [
     {
@@ -44,95 +31,10 @@ const HomePage = () => {
     }
   ];
   
-  // Hero Booking Form States
-  const [pickupLocation, setPickupLocation] = useState('');
-  const [dropoffLocation, setDropoffLocation] = useState('');
-  const [pickupDate, setPickupDate] = useState('');
-  const [dropoffDate, setDropoffDate] = useState('');
-  
-  // Min Date to Prevent Past Date Selection
-  const getTodayFormatted = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let day = today.getDate();
-    
-    // Add a Zero in Front of Months/Days if Necessary
-    month = month < 10 ? `0${month}` : month;
-    day = day < 10 ? `0${day}` : day;
-    
-    return `${year}-${month}-${day}`;
-  };
-  
-  const today = getTodayFormatted();
-
   // Get Data From Assets.js
   const featuredCars = resolveImagePaths(assets.data.featuredCars, 'image');
   const destinations = resolveImagePaths(assets.data.destinations, 'image');
   const testimonials = resolveImagePaths(assets.data.testimonials, 'photo');
-
-  // Custom Styles For Select
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      height: '2.75rem',
-      minHeight: '2.75rem',
-      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-      borderColor: '#374151',
-      borderRadius: '0.375rem',
-      fontFamily: 'Orbitron, sans-serif',
-      color: 'white',
-      boxShadow: state.isFocused ? '0 0 0 2px rgba(59, 130, 246, 0.5)' : 'none',
-      '&:hover': {
-        borderColor: '#4B5563',
-      }
-    }),
-    menu: (provided) => ({
-      ...provided,
-      backgroundColor: 'black',
-      fontFamily: 'Orbitron, sans-serif',
-      maxHeight: '240px',
-      overflowY: 'hidden',
-    }),
-    menulist: (provided) => ({
-      ...provided,
-      maxHeight: '240px',
-      overflowY: 'auto',
-      paddingRight: '8px',
-      scrollbarWidth: 'thin',
-      scrollbarColor: 'rgba(255, 255, 255, 0.5) transparent',
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isSelected ? 'rgba(59, 130, 246, 0.3)' : 'black',
-      color: 'white',
-      fontFamily: 'Orbitron, sans-serif',
-      padding: '4px 8px',
-      fontSize: '0.875rem',
-      lineHeight: '1.2',
-      '&:hover': {
-        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-      }
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      color: 'white',
-      fontFamily: 'Orbitron, sans-serif',
-    }),
-    placeholder: (provided) => ({
-      ...provided,
-      color: '#FFFFFF',
-      fontFamily: 'Orbitron, sans-serif',
-    }),
-  };
-
-  // Convert Location Options For react-select
-  const selectLocationOptions = locationOptions
-    .filter(option => option.value !== "")
-    .map(option => ({
-      value: option.value,
-      label: option.label
-    }));
 
   // Auto-Rotate Hero Captions
   useEffect(() => {
@@ -141,21 +43,6 @@ const HomePage = () => {
     }, 5000);
     return () => clearInterval(interval);
   }, [heroMessages.length]);
-
-  // Handle Pickup Date Change
-  const handlePickupDateChange = (e) => {
-    const newPickupDate = e.target.value;
-    setPickupDate(newPickupDate);
-
-    if (dropoffDate && new Date(dropoffDate) < new Date(newPickupDate)) {
-      setDropoffDate('');
-    }
-  };
-
-  // Generate Minimum Dropoff Date
-  const getMinDropoffDate = () => {
-    return pickupDate ? pickupDate : today;
-  };
 
   return (
     <div className="bg-black text-white min-h-screen font-['Orbitron'] relative">
@@ -176,111 +63,47 @@ const HomePage = () => {
           </video>
         </div>
 
+        {/* Animated Gradient Overlay */}
+        <div className="absolute inset-0 z-10 opacity-30 bg-gradient-to-b from-blue-900/0 via-cyan-900/10 to-black"></div>
+
         {/* Hero Content */}
-        <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-4 -mt-5">
-          {/* Height Container */}
-          <div className="flex flex-col justify-center items-center mb-6 h-36">
-            <div className="h-full flex flex-col justify-center items-center">
-              <h1 className="text-4xl md:text-6xl font-semibold mb-4 max-w-4xl text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-400 font-['Orbitron'] text-center break-words px-4 leading-[1.2]">
+        <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-4">
+          <div className="flex flex-col items-center" style={{ minHeight: '320px' }}>
+            {/* Title container with fixed height */}
+            <div className="flex flex-col justify-center items-center h-64">
+              <h1 className="text-4xl md:text-7xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-400 font-['Orbitron'] text-center break-words px-4 leading-[1.2]">
                 {heroMessages[currentSlide].title}
               </h1>
-              <p className="text-sm md:text-xl mb-8 max-w-xl text-gray-200 font-['Orbitron'] break-words px-4">
+              <p className="text-sm md:text-xl max-w-2xl text-gray-200 font-['Orbitron'] break-words px-4">
                 {heroMessages[currentSlide].subtitle}
               </p>
             </div>
-          </div>
-
-          {/* Booking Form Card */}
-          <div className="w-full max-w-5xl bg-black/80 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-gray-800 relative">
-            <h2 className="text-2xl font-semibold mb-6 text-center font-['Orbitron']">{t('findYourPerfectRide')}</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">{t('pickupLocation')}</label>
-                <Select
-                  options={selectLocationOptions}
-                  value={selectLocationOptions.find(option => option.value === pickupLocation)}
-                  onChange={(selectedOption) => setPickupLocation(selectedOption.value)}
-                  styles={customStyles}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary: 'rgba(59, 130, 246, 0.5)',
-                      primary25: 'rgba(59, 130, 246, 0.1)',
-                    }
-                  })}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">{t('returnLocation')}</label>
-                <Select
-                  options={selectLocationOptions}
-                  value={selectLocationOptions.find(option => option.value === dropoffLocation)}
-                  onChange={(selectedOption) => setDropoffLocation(selectedOption.value)}
-                  styles={customStyles}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary: 'rgba(59, 130, 246, 0.5)',
-                      primary25: 'rgba(59, 130, 246, 0.1)',
-                    }
-                  })}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">{t('selectDates')}</label>
-                <input
-                  type="date"
-                  value={pickupDate}
-                  onChange={handlePickupDateChange}
-                  min={today}
-                  className="w-full bg-black/80 border border-gray-700 rounded-md px-4 h-11 text-white 
-                    focus:outline-none focus:ring-2 focus:ring-blue-500 
-                    font-['Orbitron'] 
-                    text-sm
-                    transition-all duration-300
-                    hover:border-blue-500
-                    hover:bg-black/90"
-                  style={{
-                    colorScheme: 'dark'
-                  }}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">{language === 'en' ? 'Return Date' : 'Date de retour'}</label>
-                <input
-                  type="date"
-                  value={dropoffDate}
-                  onChange={(e) => setDropoffDate(e.target.value)}
-                  min={getMinDropoffDate()}
-                  className="w-full bg-black/80 border border-gray-700 rounded-md px-4 h-11 text-white 
-                    focus:outline-none focus:ring-2 focus:ring-blue-500 
-                    font-['Orbitron'] 
-                    text-sm
-                    transition-all duration-300
-                    hover:border-blue-500
-                    hover:bg-black/90"
-                  style={{
-                    colorScheme: 'dark'
-                  }}
-                  disabled={!pickupDate}
-                />
-              </div>
-            </div>
-
-            <div className="mt-6 flex justify-center">
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 mt-8">
               <Link
                 to="/cars"
-                className="bg-gradient-to-r from-white to-cyan-500 hover:from-cyan-500 hover:to-white text-black font-bold py-3 px-10 rounded-md transition-all duration-300 font-['Orbitron'] transform hover:scale-105 shadow-lg shadow-cyan-500/5"
+                className="relative overflow-hidden group px-10 py-4 bg-gradient-to-r from-white to-cyan-500 rounded-md font-bold text-black transform transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/20"
               >
-                {t('exploreOurFleet')}
+                <span className="relative z-10 font-['Orbitron'] text-lg">{t('exploreOurFleet')}</span>
+                <span className="absolute bottom-0 left-0 w-full h-0 bg-gradient-to-r from-cyan-500 to-white transition-all duration-300 group-hover:h-full group-hover:opacity-80 z-0"></span>
+              </Link>
+              
+              <Link
+                to="/about"
+                className="group px-10 py-4 bg-transparent border border-cyan-400 rounded-md font-bold text-white transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20 hover:border-white hover:text-cyan-400"
+              >
+                <span className="font-['Orbitron'] text-lg">{t('learnMore')}</span>
               </Link>
             </div>
+          </div>
+
+          {/* Animated Scroll Indicator */}
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+            <p className="text-xs text-cyan-400 font-['Orbitron'] mt-2">{language === 'en' ? 'SCROLL DOWN' : 'DÉFILER VERS LE BAS'}</p>
           </div>
         </div>
       </div>
