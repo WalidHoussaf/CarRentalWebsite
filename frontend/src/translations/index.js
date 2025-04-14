@@ -528,6 +528,8 @@ export const translations = {
     bookingConfirmed: "Booking Confirmed",
     thankYouForBooking: "Thank you for your booking!",
     bookingSuccessDescription: "Your booking has been successfully confirmed. Here are all the details of your reservation.",
+    bookingSavedToDatabase: "Your booking has been successfully saved to our database.",
+    bookingSavedLocally: "Your booking has been saved locally. It will be synchronized with our database when connectivity is restored.",
     bookingDetails: "Booking Details",
     carInfoCard: "Car Information",
     rentalPeriodTitle: "Rental Period",
@@ -545,6 +547,28 @@ export const translations = {
     receiptDownloaded: "Receipt downloaded successfully!",
     receiptError: "Error generating receipt. Please try again.",
     clickToLearnMore: "Click to learn more",
+    
+    // Bookings page
+    viewBookingHistory: "View your booking history and manage your reservations",
+    refreshing: "Refreshing...",
+    refreshBookings: "Refresh Bookings",
+    pleaseLogin: "Please Login",
+    loginToViewBookings: "You need to be logged in to view your bookings",
+    loadingBookings: "Loading Bookings...",
+    noBookingsFound: "No Bookings Found",
+    noBookingsDescription: "You haven't made any bookings yet. Explore our fleet and book your first ride!",
+    bookingCancelledSuccess: "Your booking has been successfully cancelled",
+    cancelBookingConfirmation: "Cancel Booking",
+    cancelBookingWarning: "Are you sure you want to cancel this booking? This action cannot be undone.",
+    yesCancelBooking: "Yes, Cancel Booking",
+    upcoming: "Upcoming",
+    completed: "Completed",
+    cancelled: "Cancelled",
+    close: "Close",
+    cancelBooking: "Cancel Booking",
+    priceDetails: "Price Details",
+    carRental: "Car Rental",
+    
     // Registration form fields
     registerAddress: "Address",
     enterAddress: "Enter your address",
@@ -554,6 +578,8 @@ export const translations = {
     enterZipCode: "Enter your zip code",
     registerCountry: "Country",
     enterCountry: "Enter your country",
+    
+    // Admin page
   },
   
   fr: {
@@ -1084,6 +1110,8 @@ export const translations = {
     bookingConfirmed: "Réservation Confirmée",
     thankYouForBooking: "Merci pour votre réservation !",
     bookingSuccessDescription: "Votre réservation a été confirmée avec succès. Voici tous les détails de votre réservation.",
+    bookingSavedToDatabase: "Votre réservation a été enregistrée avec succès dans notre base de données.",
+    bookingSavedLocally: "Votre réservation a été enregistrée localement. Elle sera synchronisée avec notre base de données lorsque la connectivité sera rétablie.",
     bookingDetails: "Détails de la Réservation",
     carInfoCard: "Informations sur la Voiture",
     rentalPeriodTitle: "Période de Location",
@@ -1101,6 +1129,28 @@ export const translations = {
     receiptDownloaded: "Reçu téléchargé avec succès !",
     receiptError: "Erreur lors de la génération du reçu. Veuillez réessayer.",
     clickToLearnMore: "Cliquez pour en savoir plus",
+    
+    // Bookings page
+    viewBookingHistory: "Consultez votre historique de réservations et gérez vos réservations",
+    refreshing: "Actualisation...",
+    refreshBookings: "Actualiser les Réservations",
+    pleaseLogin: "Veuillez vous Connecter",
+    loginToViewBookings: "Vous devez être connecté pour voir vos réservations",
+    loadingBookings: "Chargement des Réservations...",
+    noBookingsFound: "Aucune Réservation Trouvée",
+    noBookingsDescription: "Vous n'avez pas encore effectué de réservation. Explorez notre flotte et réservez votre premier voyage !",
+    bookingCancelledSuccess: "Votre réservation a été annulée avec succès",
+    cancelBookingConfirmation: "Annuler la Réservation",
+    cancelBookingWarning: "Êtes-vous sûr de vouloir annuler cette réservation? Cette action ne peut pas être annulée.",
+    yesCancelBooking: "Oui, Annuler la Réservation",
+    upcoming: "À venir",
+    completed: "Terminée",
+    cancelled: "Annulée",
+    close: "Fermer",
+    cancelBooking: "Annuler la Réservation",
+    priceDetails: "Détails du prix",
+    carRental: "Location de voiture",
+    
     // Registration form fields
     registerAddress: "Adresse",
     enterAddress: "Entrez votre adresse",
@@ -1110,6 +1160,8 @@ export const translations = {
     enterZipCode: "Entrez votre code postal",
     registerCountry: "Pays",
     enterCountry: "Entrez votre pays",
+    
+    // Admin page
   }
 };
 

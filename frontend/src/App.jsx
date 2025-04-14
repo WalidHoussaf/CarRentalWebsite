@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Cars from './pages/Cars';
 import CarDetails from './pages/CarDetails';
 import Booking from './pages/Booking';
+import Bookings from './pages/user/Bookings';
 import BookingConfirmation from './pages/BookingConfirmation';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -39,6 +40,12 @@ function App() {
           <Route path="/profile" element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/bookings" element={
+            <ProtectedRoute>
+              <Bookings />
             </ProtectedRoute>
           } />
           

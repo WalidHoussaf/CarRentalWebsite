@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,12 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // User account deletion
     Route::delete('/user/delete', [UserProfileController::class, 'delete']);
+    
+    // Booking routes
+    Route::get('/bookings', [BookingController::class, 'index']);
+    Route::post('/bookings', [BookingController::class, 'store']);
+    Route::get('/bookings/{id}', [BookingController::class, 'show']);
+    Route::put('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
     
     // Temporary fix: Admin routes without is_admin middleware
     // Just protected by auth:sanctum

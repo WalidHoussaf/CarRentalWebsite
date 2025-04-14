@@ -65,6 +65,8 @@ const BookingConfirmation = () => {
   const t = useTranslations(language);
   const detailsSectionRef = useRef(null);
   const paymentSectionRef = useRef(null);
+  const [bookingCreated, setBookingCreated] = useState(false);
+  const hasAttemptedBookingCreation = useRef(false);
 
   // Get Booking Data from Location State
   const bookingData = location.state || {};
@@ -128,7 +130,7 @@ const BookingConfirmation = () => {
     setCarImage(image);
   }, [carDetails]);
 
-  // Create booking on component mount
+  // Create booking on component mount - but only once when confirmed
   useEffect(() => {
     const createNewBooking = async () => {
       if (!bookingDetails || !carDetails) {
@@ -136,7 +138,28 @@ const BookingConfirmation = () => {
         return;
       }
       
+      // Create a unique identifier for this booking
+      const bookingIdentifier = `${carDetails.id}-${bookingDetails.startDate}-${bookingDetails.endDate}`;
+      
+      // Check if this exact booking has been created during this session
+      const existingCreation = sessionStorage.getItem(`booking_created_${bookingIdentifier}`);
+      if (existingCreation) {
+        const parsedData = JSON.parse(existingCreation);
+        setBookingId(parsedData.id);
+        setBookingCreated(true);
+        return;
+      }
+      
+      // If we already tried to create this booking in this component instance, don't try again
+      if (hasAttemptedBookingCreation.current) {
+        return;
+      }
+      
+      // Mark that we're attempting to create this booking
+      hasAttemptedBookingCreation.current = true;
+      
       try {
+        setBookingCreated(true); // Set flag to prevent multiple creations
         const result = await createBooking({
           car: carDetails,
           ...bookingDetails,
@@ -144,15 +167,18 @@ const BookingConfirmation = () => {
         });
         
         if (result.success) {
+          // Store in sessionStorage to remember we created this booking
+          sessionStorage.setItem(`booking_created_${bookingIdentifier}`, JSON.stringify(result.booking));
+          
           setBookingId(result.booking.id);
         }
-      } catch (error) {
-        console.error('Error creating booking:', error);
+      } catch {
+        // Handle error - just mark as not saved to database
       }
     };
     
     createNewBooking();
-  }, [bookingDetails, carDetails, createBooking, navigate]);
+  }, [bookingDetails, carDetails, createBooking, navigate, bookingCreated]);
 
   // Handle receipt download
   const handleDownloadReceipt = () => {

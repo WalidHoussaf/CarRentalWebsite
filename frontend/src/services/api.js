@@ -12,58 +12,49 @@ const fetchWithHeaders = async (url, options = {}) => {
   
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
-    console.log('Using auth token:', token.substring(0, 10) + '...');
   } else if (!url.includes('/login') && !url.includes('/register')) {
     // If no token and not trying to login/register, throw an error
     throw new Error('Authentication required. Please log in.');
   }
   
-  console.log(`API Request: ${options.method || 'GET'} ${url}`);
-  console.log('Request Headers:', headers);
-  if (options.body) {
-    console.log('Request Body:', options.body);
+  const response = await fetch(url, {
+    ...options,
+    headers,
+    // Important: Include credentials to send cookies with the request
+    credentials: 'include'
+  });
+  
+  // Handle 401 Unauthorized specifically
+  if (response.status === 401) {
+    // Clear token and user data from storage
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('user');
+    throw new Error('Your session has expired. Please log in again.');
   }
   
+  // Get the raw text first
+  const responseText = await response.text();
+  
+  // Try to parse as JSON
+  let data;
   try {
-    // Add a small delay for debugging
-    await new Promise(resolve => setTimeout(resolve, 200));
-    
-    const response = await fetch(url, {
-      ...options,
-      headers,
-      // Important: Include credentials to send cookies with the request
-      credentials: 'include'
-    });
-    
-    console.log(`Response Status:`, response.status, response.statusText);
-    
-    // Handle 401 Unauthorized specifically
-    if (response.status === 401) {
-      console.error('Authentication failed - token may be invalid or expired');
-      // Clear token and user data from storage
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('user');
-      throw new Error('Your session has expired. Please log in again.');
+    // Only try to parse as JSON if we have content
+    if (responseText.trim()) {
+      data = JSON.parse(responseText);
+    } else {
+      data = {};
     }
-    
-    // Parse the JSON response (whether success or error)
-    const data = await response.json().catch(() => {
-      console.log('Response is not valid JSON');
-      return {};
-    });
-    
-    console.log('Response Data:', data);
-    
-    // If the response wasn't successful, throw an error with the message from the server
-    if (!response.ok) {
-      throw new Error(data.message || 'Something went wrong');
-    }
-    
-    return data;
   } catch (error) {
-    console.error('Fetch Error:', error);
-    throw error;
+    // Return the raw text if JSON parsing fails
+    data = { success: false, message: 'Failed to parse response: ' + error.message, rawText: responseText };
   }
+  
+  // If the response wasn't successful, throw an error with the message from the server
+  if (!response.ok) {
+    throw new Error(data.message || 'Something went wrong');
+  }
+  
+  return data;
 };
 
 // Auth services
@@ -78,15 +69,10 @@ export const authService = {
   
   // Login a user
   login: async (credentials) => {
-    try {
-      return await fetchWithHeaders(`${API_URL}/login`, {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-      });
-    } catch (error) {
-      console.error('Login error:', error);
-      throw error;
-    }
+    return fetchWithHeaders(`${API_URL}/login`, {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    });
   },
   
   // Logout a user
@@ -101,21 +87,15 @@ export const authService = {
 export const adminService = {
   // Get all users
   getAllUsers: async () => {
-    try {
-      const data = await fetchWithHeaders(`${API_URL}/admin/users`);
-      console.log('getAllUsers raw response:', data);
-      
-      // Check if the response has the expected structure
-      if (!data.users && Array.isArray(data)) {
-        // If the API is returning an array directly instead of {users: [...]}
-        return { users: data };
-      }
-      
-      return data;
-    } catch (error) {
-      console.error('Error in getAllUsers:', error);
-      throw error;
+    const data = await fetchWithHeaders(`${API_URL}/admin/users`);
+    
+    // Check if the response has the expected structure
+    if (!data.users && Array.isArray(data)) {
+      // If the API is returning an array directly instead of {users: [...]}
+      return { users: data };
     }
+    
+    return data;
   },
   
   // Get a specific user
@@ -147,7 +127,78 @@ export const adminService = {
   },
 };
 
-export default {
-  auth: authService,
-  admin: adminService,
-}; 
+// Booking services
+export const bookingService = {
+  // Create a new booking
+  createBooking: async (bookingData) => {
+    return fetchWithHeaders(`${API_URL}/bookings`, {
+      method: 'POST',
+      body: JSON.stringify(bookingData),
+    });
+  },
+  
+  // Get all bookings for the current user
+  getUserBookings: async () => {
+    return fetchWithHeaders(`${API_URL}/bookings`);
+  },
+  
+  // Get a specific booking
+  getBooking: async (bookingId) => {
+    return fetchWithHeaders(`${API_URL}/bookings/${bookingId}`);
+  },
+  
+  // Update a booking
+  updateBooking: async (bookingId, bookingData) => {
+    return fetchWithHeaders(`${API_URL}/bookings/${bookingId}`, {
+      method: 'PUT',
+      body: JSON.stringify(bookingData),
+    });
+  },
+  
+  // Cancel a booking
+  cancelBooking: async (bookingId) => {
+    return fetchWithHeaders(`${API_URL}/bookings/${bookingId}/cancel`, {
+      method: 'PUT',
+    });
+  },
+};
+
+export const Api = {
+  post: async (endpoint, data) => {
+    const token = localStorage.getItem('auth_token');
+    
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(data),
+      credentials: 'include'
+    });
+    
+    const responseText = await response.text();
+    
+    // Try to parse as JSON
+    let parsedData;
+    if (responseText.trim()) {
+      try {
+        parsedData = JSON.parse(responseText);
+      } catch {
+        // Silently handle parse error
+        parsedData = { success: false, message: 'Failed to parse response' };
+      }
+    } else {
+      parsedData = {};
+    }
+    
+    return parsedData;
+  }
+};
+
