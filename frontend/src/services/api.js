@@ -125,6 +125,39 @@ export const adminService = {
       method: 'DELETE',
     });
   },
+  
+  // Admin Booking Management
+  getAllBookings: async () => {
+    const data = await fetchWithHeaders(`${API_URL}/admin/bookings`);
+    
+    // Check if the response has the expected structure
+    if (!data.bookings && Array.isArray(data)) {
+      // If the API is returning an array directly instead of {bookings: [...]}
+      return { bookings: data };
+    }
+    
+    return data;
+  },
+  
+  // Get a specific booking
+  getBooking: async (bookingId) => {
+    return fetchWithHeaders(`${API_URL}/admin/bookings/${bookingId}`);
+  },
+  
+  // Update a booking's status
+  updateBookingStatus: async (bookingId, status) => {
+    return fetchWithHeaders(`${API_URL}/admin/bookings/${bookingId}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status }),
+    });
+  },
+  
+  // Delete a booking
+  deleteBooking: async (bookingId) => {
+    return fetchWithHeaders(`${API_URL}/admin/bookings/${bookingId}`, {
+      method: 'DELETE',
+    });
+  },
 };
 
 // Booking services

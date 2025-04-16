@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminBookingController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/users', [AdminUserController::class, 'store']);
         Route::put('/users/{id}', [AdminUserController::class, 'update']);
         Route::delete('/users/{id}', [AdminUserController::class, 'destroy']);
+        
+        // Admin Booking Management Routes
+        Route::get('/bookings', [AdminBookingController::class, 'index']);
+        Route::get('/bookings/{id}', [AdminBookingController::class, 'show']);
+        Route::put('/bookings/{id}/status', [AdminBookingController::class, 'updateStatus']);
+        Route::delete('/bookings/{id}', [AdminBookingController::class, 'destroy']);
     });
 });
 
