@@ -37,8 +37,9 @@ const GalleryTab = ({ car }) => {
       if (savedFavorites) {
         setFavorites(JSON.parse(savedFavorites));
       }
-    } catch (error) {
-      console.error("Error loading favorites:", error);
+    } catch {
+      // Silent error handling - reset favorites on load error
+      setFavorites([]);
     }
   }, [car?.id]);
 
@@ -185,12 +186,17 @@ const GalleryTab = ({ car }) => {
         text: `Check out this ${car?.name || 'amazing vehicle'}!`,
         url: window.location.href,
       })
-      .catch(error => console.log('Error sharing', error));
+      .catch(() => {
+        // Silently handle share error - could add UI feedback if needed
+      });
     } else {
       // Fallback - copy URL to clipboard
       navigator.clipboard.writeText(window.location.href)
         .then(() => alert('Link copied to clipboard!'))
-        .catch(err => console.error('Could not copy text: ', err));
+        .catch(() => {
+          // Silent error handling with user feedback
+          alert('Failed to copy link. Please try again or copy the URL manually.');
+        });
     }
   }, [car?.name]);
 

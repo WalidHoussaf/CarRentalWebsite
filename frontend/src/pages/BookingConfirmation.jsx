@@ -834,6 +834,39 @@ const BookingConfirmation = () => {
                     ${bookingDetails.totalPrice}
                   </span>
                 </div>
+                
+                {/* Payment Method Information */}
+                {bookingDetails?.payment && (
+                  <div className="mt-5 bg-black/30 backdrop-blur-sm rounded-lg border border-green-900/20 p-3">
+                    <h4 className="text-green-400 text-xs font-['Orbitron'] mb-2 flex items-center">
+                      <div className="w-1 h-1 bg-green-400 rounded-full mr-2"></div>
+                      {t('paymentMethod')}
+                    </h4>
+                    <div className="flex justify-between">
+                      <div className="flex items-center">
+                        {bookingDetails.payment.payment_method === 'paypal' ? (
+                          <div className="flex items-center gap-1">
+                            <div className="flex bg-[#253b80] text-white text-xs px-1 rounded-l">Pay</div>
+                            <div className="flex bg-[#179bd7] text-white text-xs px-1 rounded-r">Pal</div>
+                          </div>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h.01M11 15h2" />
+                            <rect x="3" y="5" width="18" height="14" rx="2" strokeWidth={1.5} />
+                          </svg>
+                        )}
+                        <span className="ml-2 text-white font-['Orbitron'] text-sm">
+                          {bookingDetails.payment.payment_method === 'paypal' ? 'PayPal' : t('creditCard')}
+                        </span>
+                      </div>
+                    </div>
+                    {bookingDetails.payment.payment_id && (
+                      <div className="text-xs text-gray-400 mt-1 font-['Rationale']">
+                        {t('transactionID')}: <span className="text-gray-300">{bookingDetails.payment.payment_id}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

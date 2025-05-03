@@ -63,12 +63,6 @@ const AdminDashboard = () => {
       }
 
       try {
-        console.log('Fetching dashboard data, authentication status:', { 
-          isAuthenticated, 
-          isAdmin: isAdmin(),
-          token: localStorage.getItem('auth_token')?.substring(0, 10) + '...'
-        });
-        
         const response = await fetch('http://localhost:8000/api/admin/dashboard', {
           method: 'GET',
           headers: {
@@ -76,15 +70,12 @@ const AdminDashboard = () => {
             'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
           }
         });
-
-        console.log('Dashboard API response status:', response.status);
         
         if (!response.ok) {
           throw new Error(`${response.status}: ${response.statusText}`);
         }
 
         const data = await response.json();
-        console.log('Dashboard data received:', data);
         setDashboardData(data);
         setLastUpdated(new Date());
       } catch (error) {

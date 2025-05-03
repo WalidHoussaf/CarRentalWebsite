@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat';
+import { logApiError, logError } from '../../utils/errorLogger';
 
 // Fix Leaflet icon issues
 delete L.Icon.Default.prototype._getIconUrl;
@@ -125,8 +126,9 @@ function MapUpdater({ data, mapType }) {
             1.0: '#c026d3'  // fuchsia-600
           }
         }).addTo(map);
-      } catch (err) {
-        console.error('Error creating heatmap:', err);
+      } catch (error) {
+        // Log error but handle silently to maintain user experience
+        logError(error, 'MapUpdater', { mapType: 'heatmap', dataPoints: data.heatmap?.length });
       }
     } else if (mapType === 'markers' && data.carMarkers && data.carMarkers.length > 0) {
       data.carMarkers.forEach(car => {
@@ -303,7 +305,7 @@ const MapVisualization = () => {
     const token = localStorage.getItem('auth_token') || accessToken;
     
     if (!token) {
-      console.log('No auth token found, using demo data');
+      // Silently use demo data when no auth token is available
       setLoading(false);
       setError('Authentication required');
       setUseDemoData(true); // Automatically switch to demo data if no token
@@ -328,15 +330,23 @@ const MapVisualization = () => {
         setMapData(response.data.data);
         setError(null);
       } else {
-        console.warn('Map data fetch returned non-success status:', response.data);
+        // Log warning without console output
+        logError('API returned non-success status', 'MapVisualization', { 
+          status: response.data?.status,
+          response: response.data
+        });
         setError('Failed to fetch map data. Using demo data instead.');
         // Fallback to demo data
         setUseDemoData(true);
         setMapData(demoMapData);
       }
-    } catch (err) {
-      console.error('Error fetching map data:', err);
-      setError('Error fetching map data. Using demo data instead.');
+    } catch (error) {
+      // Use the error logger to log API errors with context
+      const errorMessage = logApiError(error, 'api/admin/map-data', { period: mapPeriod });
+      
+      // Display a user-friendly error message
+      setError(`${errorMessage} Using demo data instead.`);
+      
       // Fallback to demo data on error
       setUseDemoData(true);
       setMapData(demoMapData);

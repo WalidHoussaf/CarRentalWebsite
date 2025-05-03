@@ -49,7 +49,6 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      console.log("Fetching users...");
       
       // Direct API call without custom helpers
       const token = localStorage.getItem('auth_token');
@@ -61,7 +60,6 @@ const UserManagement = () => {
 
       // Make API request directly like the login process does
       const API_URL = 'http://127.0.0.1:8000/api';
-      console.log("Using API URL:", API_URL);
       
       const response = await fetch(`${API_URL}/admin/users`, {
         method: 'GET',
@@ -72,8 +70,6 @@ const UserManagement = () => {
         },
         credentials: 'include'
       });
-
-      console.log("API Response status:", response.status);
       
       // Check if unauthorized
       if (response.status === 401) {
@@ -88,46 +84,25 @@ const UserManagement = () => {
       let data;
       try {
         const text = await response.text(); // Get raw response text
-        console.log("Raw API response text:", text);
         
-        // More detailed logging to find exactly where the issue occurs
-        if (text) {
-          console.log("Response length:", text.length);
-          console.log("First 100 characters:", text.substring(0, 100));
-          console.log("Last 100 characters:", text.substring(text.length - 100));
-          
-          // Check for common sources of JSON parsing errors
-          const lastChar = text.charAt(text.length - 1);
-          const lastChars = text.substring(text.length - 5);
-          console.log("Last character code:", lastChar.charCodeAt(0));
-          console.log("Last 5 characters:", lastChars);
-          
-          // Try to clean the response by removing BOM and other common issues
-          let cleanedText = text.trim();
-          
-          // Remove BOM if present
-          if (cleanedText.charCodeAt(0) === 0xFEFF) {
-            cleanedText = cleanedText.substring(1);
-          }
-          
-          // Find where the JSON object/array ends
-          const lastBrace = Math.max(cleanedText.lastIndexOf('}'), cleanedText.lastIndexOf(']'));
-          if (lastBrace !== -1 && lastBrace < cleanedText.length - 1) {
-            console.log("Extra content after JSON:", cleanedText.substring(lastBrace + 1));
-            cleanedText = cleanedText.substring(0, lastBrace + 1);
-          }
-          
-          // Try parsing the cleaned text
-          console.log("Cleaned text for parsing:", cleanedText);
-          data = JSON.parse(cleanedText);
-          console.log("Parsed API Response data:", data);
-        } else {
-          console.warn("Empty response received");
-          data = [];
+        // Clean the response by removing BOM and other common issues
+        let cleanedText = text.trim();
+        
+        // Remove BOM if present
+        if (cleanedText.charCodeAt(0) === 0xFEFF) {
+          cleanedText = cleanedText.substring(1);
         }
+        
+        // Find where the JSON object/array ends
+        const lastBrace = Math.max(cleanedText.lastIndexOf('}'), cleanedText.lastIndexOf(']'));
+        if (lastBrace !== -1 && lastBrace < cleanedText.length - 1) {
+          cleanedText = cleanedText.substring(0, lastBrace + 1);
+        }
+        
+        // Try parsing the cleaned text
+        data = JSON.parse(cleanedText);
       } catch (parseError) {
-        console.error("JSON parsing error:", parseError);
-        setError(`Failed to parse server response: ${parseError.message}. Check console for details.`);
+        setError(`Failed to parse server response: ${parseError.message}`);
         setLoading(false);
         return;
       }
@@ -138,13 +113,11 @@ const UserManagement = () => {
       } else if (data && data.users && Array.isArray(data.users)) {
         setUsers(data.users);
       } else {
-        console.error("Unexpected response format:", data);
         setError('Received invalid data format from server');
       }
       
       setError(null);
     } catch (error) {
-      console.error("Error fetching users:", error);
       setError(error.message || 'Failed to load users');
     } finally {
       setLoading(false);
@@ -272,8 +245,6 @@ const UserManagement = () => {
     setLoading(true);
     
     try {
-      console.log('Creating new user:', formData);
-      
       // Create full name from first and last name
       const userData = {
         ...formData,
@@ -305,13 +276,8 @@ const UserManagement = () => {
       let data;
       try {
         const text = await response.text();
-        console.log("Create user raw response:", text);
         
         if (text) {
-          // More detailed logging
-          console.log("Response length:", text.length);
-          console.log("Last 5 characters:", text.substring(text.length - 5));
-          
           // Clean the response
           let cleanedText = text.trim();
           
@@ -323,7 +289,6 @@ const UserManagement = () => {
           // Find where the JSON object/array ends
           const lastBrace = Math.max(cleanedText.lastIndexOf('}'), cleanedText.lastIndexOf(']'));
           if (lastBrace !== -1 && lastBrace < cleanedText.length - 1) {
-            console.log("Extra content after JSON:", cleanedText.substring(lastBrace + 1));
             cleanedText = cleanedText.substring(0, lastBrace + 1);
           }
           
@@ -332,8 +297,7 @@ const UserManagement = () => {
           data = {};
         }
       } catch (parseError) {
-        console.error("JSON parsing error:", parseError);
-        throw new Error(`Failed to parse server response: ${parseError.message}. Check console for details.`);
+        throw new Error(`Failed to parse server response: ${parseError.message}`);
       }
       
       if (!response.ok) {
@@ -367,7 +331,6 @@ const UserManagement = () => {
       fetchUsers();
       
     } catch (error) {
-      console.error('Error creating user:', error);
       setMessage({
         type: 'error',
         text: error.message || 'Failed to create user'
@@ -396,8 +359,6 @@ const UserManagement = () => {
     setLoading(true);
     
     try {
-      console.log('Updating user:', formData);
-      
       // Create full name from first and last name
       const userData = {
         ...formData,
@@ -429,13 +390,8 @@ const UserManagement = () => {
       let data;
       try {
         const text = await response.text();
-        console.log("Update user raw response:", text);
         
         if (text) {
-          // More detailed logging
-          console.log("Response length:", text.length);
-          console.log("Last 5 characters:", text.substring(text.length - 5));
-          
           // Clean the response
           let cleanedText = text.trim();
           
@@ -447,7 +403,6 @@ const UserManagement = () => {
           // Find where the JSON object/array ends
           const lastBrace = Math.max(cleanedText.lastIndexOf('}'), cleanedText.lastIndexOf(']'));
           if (lastBrace !== -1 && lastBrace < cleanedText.length - 1) {
-            console.log("Extra content after JSON:", cleanedText.substring(lastBrace + 1));
             cleanedText = cleanedText.substring(0, lastBrace + 1);
           }
           
@@ -456,8 +411,7 @@ const UserManagement = () => {
           data = {};
         }
       } catch (parseError) {
-        console.error("JSON parsing error:", parseError);
-        throw new Error(`Failed to parse server response: ${parseError.message}. Check console for details.`);
+        throw new Error(`Failed to parse server response: ${parseError.message}`);
       }
       
       if (!response.ok) {
@@ -478,7 +432,6 @@ const UserManagement = () => {
       fetchUsers();
       
     } catch (error) {
-      console.error('Error updating user:', error);
       setMessage({
         type: 'error',
         text: error.message || 'Failed to update user'
@@ -523,7 +476,6 @@ const UserManagement = () => {
         let errorData = {};
         try {
           const text = await response.text();
-          console.log("Delete error raw response:", text);
           
           if (text) {
             // Clean the response
@@ -537,14 +489,13 @@ const UserManagement = () => {
             // Find where the JSON object/array ends
             const lastBrace = Math.max(cleanedText.lastIndexOf('}'), cleanedText.lastIndexOf(']'));
             if (lastBrace !== -1 && lastBrace < cleanedText.length - 1) {
-              console.log("Extra content after JSON:", cleanedText.substring(lastBrace + 1));
               cleanedText = cleanedText.substring(0, lastBrace + 1);
             }
             
             errorData = JSON.parse(cleanedText);
           }
-        } catch (e) {
-          console.error("Error parsing delete response:", e);
+        } catch {
+          // Error parsing response - continue with generic error message
         }
         throw new Error(errorData.message || `Failed to delete user (${response.status})`);
       }
@@ -562,7 +513,6 @@ const UserManagement = () => {
       // Refresh user list
       fetchUsers();
     } catch (error) {
-      console.error("Delete error:", error);
       setMessage({ type: 'error', text: error.message || 'Failed to delete user' });
       setConfirmDelete(null);
     } finally {
@@ -572,8 +522,6 @@ const UserManagement = () => {
 
   // Debug view
   if (debugInfo) {
-    console.log("Debug Info:", debugInfo);
-    
     // Check if authentication data looks good
     if (debugInfo.isAuthenticated && debugInfo.isAdmin) {
       // Don't show debug view if authenticated and admin

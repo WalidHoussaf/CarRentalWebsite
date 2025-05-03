@@ -138,7 +138,6 @@ const PredictiveAnalytics = () => {
     // Check if we have an auth token
     const token = localStorage.getItem('auth_token') || authToken;
     if (!token) {
-      console.error('No authentication token available');
       setError('Authentication error. Please log in again.');
       setLoading(false);
       return;
@@ -147,7 +146,6 @@ const PredictiveAnalytics = () => {
     try {
       setLoading(true);
       setError(null);
-      console.log(`Fetching predictions data with token: ${token.substring(0, 10)}... (Attempt: ${retryCount + 1})`);
       
       const response = await axios.get('http://localhost:8000/api/admin/predictions', {
         headers: {
@@ -158,33 +156,19 @@ const PredictiveAnalytics = () => {
         timeout: 15000
       });
 
-      console.log('Prediction API response:', response);
-
-      // Add detailed logging of the response structure to diagnose the issue
-      console.log('Response data structure:', {
-        hasData: !!response.data,
-        status: response.data?.status,
-        hasBookingPredictions: !!response.data?.data?.bookingPredictions,
-        hasRevenueForecasts: !!response.data?.data?.revenueForecasts,
-        hasPricingRecommendations: !!response.data?.data?.pricingRecommendations
-      });
-
       // Fix: Check if the response has data regardless of status property
       if (response.data && response.data.data) {
-        console.log("Setting prediction data:", response.data.data);
         setPredictionData(response.data.data);
         setError(null);
         setRetryCount(0); // Reset retry count on success
         setLoading(false); // Ensure loading is set to false here
       } else if (response.data && response.data.status === 'success') {
         // Alternative success path if the data isn't in the expected structure
-        console.log("Setting prediction data (alt path):", response.data);
         setPredictionData(response.data);
         setError(null);
         setRetryCount(0);
         setLoading(false);
       } else {
-        console.warn('Prediction data fetch returned non-success status or invalid structure:', response.data);
         setError(`Failed to fetch prediction data: ${response.data?.message || 'Invalid data structure'}`);
         setLoading(false);
         
@@ -197,12 +181,10 @@ const PredictiveAnalytics = () => {
         }
       }
     } catch (err) {
-      console.error('Error fetching prediction data:', err);
-      // More detailed error message
-      const errorMessage = err.response 
-        ? `Error (${err.response.status}): ${err.response.data?.message || err.message}` 
-        : `Network error: ${err.message}`;
-      setError(errorMessage);
+      // Replace console.error with proper error handling
+      setError(`Error: ${err.response 
+        ? `(${err.response.status}): ${err.response.data?.message || err.message}` 
+        : `Network error: ${err.message}`}`);
       setLoading(false);
       
       // Auto-retry on network errors or server errors (5xx)
@@ -224,14 +206,11 @@ const PredictiveAnalytics = () => {
 
   // Prepare chart data for bookings
   const prepareBookingChartData = () => {
-    console.log("Preparing booking chart data with:", effectivePredictionData);
-    
     // Handle both possible data structures
     const bookingPredictions = effectivePredictionData?.bookingPredictions || 
                               (effectivePredictionData && Array.isArray(effectivePredictionData) ? effectivePredictionData : null);
                               
     if (!bookingPredictions) {
-      console.warn("No valid booking predictions found in:", effectivePredictionData);
       return null;
     }
 
@@ -280,14 +259,11 @@ const PredictiveAnalytics = () => {
 
   // Prepare chart data for revenue
   const prepareRevenueChartData = () => {
-    console.log("Preparing revenue chart data with:", effectivePredictionData);
-    
     // Handle both possible data structures
     const revenueForecasts = effectivePredictionData?.revenueForecasts || 
                            (effectivePredictionData && effectivePredictionData.revenue ? effectivePredictionData.revenue : null);
                            
     if (!revenueForecasts) {
-      console.warn("No valid revenue forecasts found in:", effectivePredictionData);
       return null;
     }
 
@@ -399,26 +375,21 @@ const PredictiveAnalytics = () => {
 
   // Render pricing recommendations
   const renderPricingRecommendations = () => {
-    console.log("Rendering pricing recommendations with:", effectivePredictionData);
+    const pricingRecommendations = effectivePredictionData?.pricingRecommendations || [];
     
-    // Handle both possible data structures
-    const pricingRecommendations = effectivePredictionData?.pricingRecommendations || 
-                                 (effectivePredictionData && effectivePredictionData.pricing ? effectivePredictionData.pricing : null);
-    
-    if (!pricingRecommendations) {
-      console.warn("No valid pricing recommendations found in:", effectivePredictionData);
+    if (pricingRecommendations.length === 0) {
       return (
-        <div className="flex items-center justify-center h-64">
-          <p className="text-gray-400">{t('noPricingData') || 'No pricing data available'}</p>
+        <div className="bg-black/50 rounded-lg p-6 border border-cyan-800/30">
+          <div className="flex flex-col items-center justify-center h-40">
+            <span className="text-gray-400">{t('noPricingRecommendations') || 'No pricing recommendations available'}</span>
+          </div>
         </div>
       );
     }
 
-    const categories = Object.values(pricingRecommendations);
-    
     return (
       <div className="space-y-6 max-h-80 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-cyan-900/50 scrollbar-track-black/20">
-        {categories.map((category, index) => (
+        {pricingRecommendations.map((category, index) => (
           <div 
             key={index} 
             className="bg-black/40 rounded-lg p-4 border border-cyan-900/30 hover:border-cyan-500/30 transition-all duration-300"

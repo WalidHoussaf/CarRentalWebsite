@@ -119,11 +119,14 @@ const Booking = () => {
     setBookingStep(4);
   };
   
-  const handleBookingSubmit = () => {
-    // Navigate to confirmation page with booking data
+  const handleBookingSubmit = (paymentData = { payment_method: 'creditCard' }) => {
+    // Navigate to confirmation page with booking data and payment info
     navigate('/booking-confirmation', { 
       state: { 
-        bookingDetails,
+        bookingDetails: {
+          ...bookingDetails,
+          payment: paymentData
+        },
         carDetails: car
       } 
     });

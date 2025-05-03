@@ -108,23 +108,16 @@ const BookingManagement = () => {
         setLoading(true);
         const response = await adminService.getAllBookings();
         
-        // Log the response to understand its structure
-        console.log('API Response:', response);
-        
         // Check if we have bookings data
         if (response.bookings) {
-          console.log('Setting bookings from response.bookings:', response.bookings);
           setBookings(response.bookings);
         } else if (Array.isArray(response)) {
-          console.log('Setting bookings from array response:', response);
           setBookings(response);
         } else if (response.success && Array.isArray(response.data)) {
           // Additional check for {success: true, data: [...]} structure
-          console.log('Setting bookings from response.data:', response.data);
           setBookings(response.data);
         } else {
           // Error handling for unexpected response format
-          console.error('Unexpected API response format:', response);
           setErrorMessage('Unexpected response format');
         }
       } catch (err) {
@@ -218,36 +211,6 @@ const BookingManagement = () => {
     
     return null;
   };
-  
-  // Log bookings data when it changes
-  useEffect(() => {
-    if (bookings.length > 0) {
-      console.log('First booking sample:', bookings[0]);
-      
-      // Check what date format properties are available
-      const firstBooking = bookings[0];
-      console.log('Date properties:',  {
-        pickup_date: firstBooking.pickup_date,
-        start_date: firstBooking.start_date,
-        pickup_datetime: firstBooking.pickup_datetime,
-        return_date: firstBooking.return_date,
-        end_date: firstBooking.end_date
-      });
-      
-      // Check what price properties are available
-      console.log('Price properties:', {
-        total_amount: firstBooking.total_amount,
-        total_price: firstBooking.total_price,
-        price: firstBooking.price,
-        amount: firstBooking.amount,
-        daily_rate: firstBooking.daily_rate
-      });
-      
-      // Log available status values
-      const uniqueStatuses = [...new Set(bookings.map(b => b.status))];
-      console.log('Available status values:', uniqueStatuses);
-    }
-  }, [bookings]);
   
   // Handler for viewing booking details
   const handleViewDetails = (booking) => {
@@ -343,8 +306,6 @@ const BookingManagement = () => {
       return [];
     }
     
-    console.log('Filtering', bookings.length, 'bookings with statusFilter:', statusFilter ? `"${statusFilter}"` : 'none');
-    
     return bookings.filter(booking => {
       // Search term filtering
       const searchMatches = !searchTerm || 
@@ -365,40 +326,9 @@ const BookingManagement = () => {
       const bookingStatus = (booking.status || '').toString().toLowerCase().trim();
       const filterStatus = statusFilter.toLowerCase().trim();
       
-      // Debug any mismatch for first few items
-      if (booking.id < 5) {
-        console.log(`Booking #${booking.id} - Status: "${bookingStatus}" vs Filter: "${filterStatus}" - Match: ${bookingStatus === filterStatus}`);
-      }
-      
       return bookingStatus === filterStatus;
     });
   }, [bookings, searchTerm, statusFilter]);
-  
-  // Debug effect for status filter changes
-  useEffect(() => {
-    if (statusFilter === '') {
-      console.log('STATUS FILTER: All bookings (no filter)');
-    } else {
-      console.log(`STATUS FILTER CHANGED TO: "${statusFilter}"`);
-    }
-    
-    // Check if any bookings match this status
-    if (bookings.length > 0 && statusFilter !== '') {
-      const matchingBookings = bookings.filter(b => 
-        (b.status || '').toLowerCase() === statusFilter.toLowerCase()
-      );
-      console.log(`Bookings matching status "${statusFilter}": ${matchingBookings.length} of ${bookings.length}`);
-      
-      if (matchingBookings.length === 0 && bookings.length > 0) {
-        console.log('Available statuses:');
-        const uniqueStatuses = [...new Set(bookings.map(b => b.status))];
-        console.log(uniqueStatuses);
-      }
-    }
-    
-    // Log filtered bookings
-    console.log('Filtered bookings count after filter change:', filteredBookings.length);
-  }, [statusFilter, bookings, filteredBookings.length]);
   
   // Render loading state
   if (loading && bookings.length === 0) {
@@ -592,7 +522,6 @@ const BookingManagement = () => {
                     <div className="py-1 w-full">
                       <button
                         onClick={() => {
-                          console.log('DIRECT: Setting filter to ALL');
                           setStatusFilter('');
                           setDropdownOpen(false);
                         }}
@@ -606,7 +535,6 @@ const BookingManagement = () => {
                       </button>
                       <button
                         onClick={() => {
-                          console.log('DIRECT: Setting filter to pending');
                           setStatusFilter('pending');
                           setDropdownOpen(false);
                         }}
@@ -620,7 +548,6 @@ const BookingManagement = () => {
                       </button>
                       <button
                         onClick={() => {
-                          console.log('DIRECT: Setting filter to confirmed');
                           setStatusFilter('confirmed');
                           setDropdownOpen(false);
                         }}
@@ -634,7 +561,6 @@ const BookingManagement = () => {
                       </button>
                       <button
                         onClick={() => {
-                          console.log('DIRECT: Setting filter to cancelled');
                           setStatusFilter('cancelled');
                           setDropdownOpen(false);
                         }}
@@ -648,7 +574,6 @@ const BookingManagement = () => {
                       </button>
                       <button
                         onClick={() => {
-                          console.log('DIRECT: Setting filter to completed');
                           setStatusFilter('completed');
                           setDropdownOpen(false);
                         }}

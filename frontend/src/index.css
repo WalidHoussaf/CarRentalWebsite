@@ -168,3 +168,237 @@
 .hide-scrollbar::-webkit-scrollbar-button {
   display: none;
 }
+
+/* PayPal Checkout Enhancements */
+
+/* Animation utilities */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes pulse-slow-reverse {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes scanner {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+@keyframes rotate3d {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--move-x, 10px), var(--move-y, -50px));
+    opacity: 0;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow-reverse {
+  animation: pulse-slow-reverse 7s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 10s ease-in-out infinite;
+}
+
+.shadow-text {
+  text-shadow: 0 0 10px rgba(56,189,248,0.5);
+}
+
+.shadow-text-subtle {
+  text-shadow: 0 0 8px rgba(30,64,175,0.3);
+}
+
+.shadow-glow {
+  box-shadow: 0 0 15px rgba(56,189,248,0.4);
+}
+
+.shadow-glow-subtle {
+  box-shadow: 0 0 10px rgba(30,64,175,0.25);
+}
+
+.shadow-glow-sm {
+  box-shadow: 0 0 10px rgba(56,189,248,0.3);
+}
+
+.shadow-glow-error {
+  box-shadow: 0 0 15px rgba(239,68,68,0.4);
+}
+
+.shadow-glow-error-subtle {
+  box-shadow: 0 0 12px rgba(185,28,28,0.25);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Particles */
+.particles-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  background: linear-gradient(to right, rgba(56,189,248,0.8), rgba(59,130,246,0.8));
+  border-radius: 50%;
+  top: var(--y);
+  left: var(--x);
+  opacity: 0;
+  animation: particle-float var(--duration) ease-in-out var(--delay) infinite;
+}
+
+/* Scanner line */
+.scanner-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(6,182,212,0) 0%, rgba(6,182,212,0.5) 50%, rgba(6,182,212,0) 100%);
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 10px 2px rgba(6,182,212,0.5);
+  animation: scanner 10s cubic-bezier(0.3, 0.1, 0.6, 0.9) infinite;
+  opacity: 0.7;
+}
+
+/* 3D Cube */
+.cube-container {
+  perspective: 1000px;
+  width: 100px;
+  height: 100px;
+}
+
+.cube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: rotate3d 20s linear infinite;
+}
+
+.cube-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(6,182,212,0.3);
+  background: rgba(14,116,144,0.06);
+  opacity: 0.6;
+}
+
+.cube-face.front {
+  transform: rotateY(0deg) translateZ(50px);
+}
+
+.cube-face.back {
+  transform: rotateY(180deg) translateZ(50px);
+}
+
+.cube-face.left {
+  transform: rotateY(-90deg) translateZ(50px);
+}
+
+.cube-face.right {
+  transform: rotateY(90deg) translateZ(50px);
+}
+
+.cube-face.top {
+  transform: rotateX(90deg) translateZ(50px);
+}
+
+.cube-face.bottom {
+  transform: rotateX(-90deg) translateZ(50px);
+}
+
+/* 3D Card Effect */
+.card-3d-container {
+  perspective: 1500px;
+}
+
+.card-3d-wrapper {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card-3d-container:hover .card-3d-wrapper {
+  transform: rotateY(5deg) rotateX(2deg) translateZ(10px);
+}
+
+.card-3d {
+  position: relative;
+  transition: box-shadow 0.6s, transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card-3d:hover {
+  box-shadow: 0 20px 40px rgba(14,165,233,0.2), 0 15px 20px rgba(14,165,233,0.1);
+}
+
+/* Element Entrance Animations */
+.animate-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.animate-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Neon button effect */
+.neon-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at center, rgba(14,165,233,0.3) 0%, transparent 70%);
+  transition: opacity 0.4s ease;
+}
+
+.neon-button:hover:before {
+  opacity: 1;
+}

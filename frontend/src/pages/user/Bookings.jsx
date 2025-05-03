@@ -93,16 +93,13 @@ const Bookings = () => {
     if (typeof options === 'string') {
       try {
         options = JSON.parse(options);
-        console.log('Successfully parsed options JSON:', options);
       } catch {
         // If not valid JSON, it might be a comma-separated list
         if (options.includes(',')) {
           options = options.split(',').map(opt => opt.trim());
-          console.log('Parsed options as comma-separated list:', options);
         } else {
           // Single option as string
           options = [options];
-          console.log('Using single option as array:', options);
         }
       }
     }
@@ -127,7 +124,6 @@ const Bookings = () => {
           else if (typeof option === 'string' || (typeof option === 'object' && option.id)) {
             const id = typeof option === 'string' ? option : option.id;
             if (!optionDefinitions[id]) {
-              console.log('Skipping unknown option:', id);
               return null;
             }
           }
@@ -208,16 +204,13 @@ const Bookings = () => {
   // Load bookings from the database
   useEffect(() => {
     const loadBookings = async () => {
-      console.log('Loading bookings effect triggered');
       setLocalLoading(true);
       
       try {
         if (isAuthenticated && user) {
-          console.log('Fetching bookings from API');
           const apiBookings = await fetchUserBookings();
           
           if (apiBookings) {
-            console.log('Successfully loaded bookings from API:', apiBookings.length);
             setLocalBookings(apiBookings);
           }
         }
@@ -236,9 +229,6 @@ const Bookings = () => {
 
   // Handle booking details view
   const handleViewDetails = (booking) => {
-    console.log('Viewing booking details:', booking);
-    console.log('Raw booking options before processing:', booking.options);
-    
     // Process options if they exist
     if (booking.options) {
       let options = booking.options;
@@ -248,16 +238,13 @@ const Bookings = () => {
         try {
           // Try parsing as JSON first
           options = JSON.parse(options);
-          console.log('Successfully parsed options JSON:', options);
         } catch {
           // If not valid JSON, it might be a comma-separated list
           if (options.includes(',')) {
             options = options.split(',').map(opt => opt.trim());
-            console.log('Parsed options as comma-separated list:', options);
           } else {
             // Single option as string
             options = [options];
-            console.log('Using single option as array:', options);
           }
         }
       }
@@ -268,14 +255,10 @@ const Bookings = () => {
       
       // Always recalculate options price based on our defined prices
       booking.options_price = calculateOptionsPrice(parsedOptions);
-      console.log('Calculated options price:', booking.options_price);
       
       // Update the total_price to include the car_price * total_days + options_price
       const basePrice = booking.car_price * booking.total_days;
       booking.total_price = basePrice + booking.options_price;
-      console.log('Updated total price:', booking.total_price, '(Base:', basePrice, '+ Options:', booking.options_price, ')');
-      
-      console.log('Processed options with proper names:', parsedOptions);
     } else {
       // Ensure options is an array and options_price is 0 if no options
       booking.options = [];
@@ -294,7 +277,6 @@ const Bookings = () => {
   
   // Initiate booking cancellation
   const handleCancelBooking = (bookingId) => {
-    console.log('Initiating cancellation for booking:', bookingId);
     setCancellingBookingId(bookingId);
     setShowCancelConfirm(true);
   };
@@ -303,11 +285,9 @@ const Bookings = () => {
   const confirmCancelBooking = async () => {
     if (!cancellingBookingId) return;
     
-    console.log('Confirming cancellation for booking:', cancellingBookingId);
     try {
       const result = await updateBookingStatus(cancellingBookingId, 'cancelled');
       if (result.success) {
-        console.log('Booking cancelled successfully through API');
         setCancelSuccess(true);
         setCancelError(null);
         

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { authService } from '../services/api';
 
 // Create context
@@ -96,11 +96,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Check if user is admin
-  const isAdmin = () => {
-    const userIsAdmin = user && user.role === 'admin';
-    console.log('isAdmin check:', user?.name, user?.role, userIsAdmin);
+  const isAdmin = useCallback(() => {
+    const userIsAdmin = user && (user.role === 'admin' || user.is_admin);
     return userIsAdmin;
-  };
+  }, [user]);
 
   return (
     <AuthContext.Provider 

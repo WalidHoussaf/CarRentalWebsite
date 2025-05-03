@@ -9,7 +9,7 @@ const NewsletterSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Email submitted:', email);
+    // Process the email submission silently - can be replaced with actual API call
     setEmail('');
   };
 

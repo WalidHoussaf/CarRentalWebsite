@@ -566,6 +566,18 @@ export const translations = {
     continueToSummary: "Continue to Summary",
     backToLocation: "Back to Location",
     
+    // PayPal Checkout translations
+    completeYourPayment: "Complete Your Payment",
+    securePaymentProcessing: "Secure payment processing through PayPal",
+    orderSummary: "Order Summary",
+    paypalPassword: "PayPal Password",
+    payNow: "Pay Now",
+    paypalSandboxMode: "This is a sandbox mode for demonstration purposes.",
+    anyEmailPasswordWillWork: "Any email and password combination will work.",
+    paymentError: "Error processing payment. Please try again.",
+    paymentSessionExpired: "Your payment session has expired or the booking information is missing. Please try again.",
+    error: "Error",
+    
     // Booking summary
     bookingSummary: "Booking Summary",
     notSelectedYet: "Not selected yet",
@@ -1394,6 +1406,18 @@ export const translations = {
     baseRate: "Tarif de Base ({price} × {days} jours)",
     continueToSummary: "Continuer vers le Résumé",
     backToLocation: "Retour à la Localisation",
+    
+    // PayPal Checkout translations
+    completeYourPayment: "Complétez Votre Paiement",
+    securePaymentProcessing: "Traitement sécurisé des paiements via PayPal",
+    orderSummary: "Résumé de la Commande",
+    paypalPassword: "Mot de Passe PayPal",
+    payNow: "Payer Maintenant",
+    paypalSandboxMode: "Ceci est un mode sandbox à des fins de démonstration.",
+    anyEmailPasswordWillWork: "N'importe quelle combinaison d'email et de mot de passe fonctionnera.",
+    paymentError: "Erreur lors du traitement du paiement. Veuillez réessayer.",
+    paymentSessionExpired: "Votre session de paiement a expiré ou les informations de réservation sont manquantes. Veuillez réessayer.",
+    error: "Erreur",
     
     // Booking summary
     bookingSummary: "Résumé de Réservation",

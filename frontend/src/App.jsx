@@ -8,6 +8,7 @@ import CarDetails from './pages/CarDetails';
 import Booking from './pages/Booking';
 import Bookings from './pages/user/Bookings';
 import BookingConfirmation from './pages/BookingConfirmation';
+import PayPalCheckoutPage from './pages/PayPalCheckoutPage';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
@@ -32,6 +33,7 @@ function App() {
           <Route path="/cars/:id" element={<CarDetails />} />
           <Route path="/booking/:id" element={<Booking />} />
           <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+          <Route path="/paypal-checkout" element={<PayPalCheckoutPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />

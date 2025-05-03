@@ -487,22 +487,15 @@ const CarManagement = () => {
         setLoading(true);
         const response = await adminService.getAllCars();
         
-        // Log the response to understand its structure
-        console.log('API Response:', response);
-        
         // Check if we have cars data
         if (response.data) {
-          console.log('Setting cars from response.data:', response.data);
           setCars(response.data);
         } else if (Array.isArray(response)) {
-          console.log('Setting cars from array response:', response);
           setCars(response);
         } else if (response.success && Array.isArray(response.data)) {
-          console.log('Setting cars from response.data:', response.data);
           setCars(response.data);
         } else {
           // Error handling for unexpected response format
-          console.error('Unexpected API response format:', response);
           setErrorMessage('Unexpected response format');
         }
       } catch (err) {
@@ -522,8 +515,6 @@ const CarManagement = () => {
     if (!cars || cars.length === 0) {
       return [];
     }
-    
-    console.log('Filtering', cars.length, 'cars with categoryFilter:', categoryFilter ? `"${categoryFilter}"` : 'none');
     
     return cars.filter(car => {
       // Search term filtering
