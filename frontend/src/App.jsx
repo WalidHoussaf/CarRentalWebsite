@@ -17,6 +17,7 @@ import NotFound from './pages/NotFound';
 import AdminDashboard from './pages/admin/Dashboard';
 import UserManagement from './pages/admin/UserManagement';
 import BookingManagement from './pages/admin/BookingManagement';
+import CarManagement from './pages/admin/CarManagement';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -66,6 +67,12 @@ function App() {
           <Route path="/admin/bookings" element={
             <ProtectedRoute>
               <BookingManagement />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/admin/cars" element={
+            <ProtectedRoute>
+              <CarManagement />
             </ProtectedRoute>
           } />
           

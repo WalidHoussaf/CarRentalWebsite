@@ -18,10 +18,17 @@ const LocationFilter = ({ filters, handleFilterChange }) => {
   return (
     <div className="mb-6 relative">
       <label className="text-sm font-medium text-gray-300 mb-2 font-['Orbitron'] flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-cyan-400" viewBox="0 0 20 20" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 mr-1 ${filters.location !== 'all' ? 'text-cyan-400' : 'text-cyan-400'}`} viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
         </svg>
-        {t('location')}
+        {filters.location !== 'all' ? (
+          <span className="flex items-center">
+            {t('location')} 
+            <span className="ml-1 text-xs bg-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full animate-pulse">
+              {localizedLocations.find(loc => loc.value === filters.location)?.label || filters.location}
+            </span>
+          </span>
+        ) : t('location')}
       </label>
       <Select
         options={localizedLocations}

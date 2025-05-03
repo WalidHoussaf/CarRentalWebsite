@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Car;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +42,16 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         try {
+            $user = Auth::user();
+            
+            // Prevent admin users from creating bookings
+            if ($user->role === 'admin') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Admin users cannot create bookings. Please use a customer account.'
+                ], 403);
+            }
+            
             $validator = Validator::make($request->all(), [
                 'car' => 'required|array',
                 'car.id' => 'required|integer',
@@ -105,6 +117,21 @@ class BookingController extends Controller
                 ]);
                 
                 $booking->save();
+                
+                // Log the activity
+                ActivityLog::log(
+                    'booking',
+                    "New booking for {$booking->car_name}",
+                    [
+                        'booking_id' => $booking->id,
+                        'car_id' => $booking->car_id,
+                        'car' => $booking->car_name,
+                        'start_date' => $booking->start_date,
+                        'end_date' => $booking->end_date,
+                    ],
+                    true,
+                    "/admin/bookings/{$booking->id}"
+                );
                 
                 return response()->json([
                     'success' => true,
@@ -172,6 +199,17 @@ class BookingController extends Controller
             
             $booking->status = 'cancelled';
             $booking->save();
+            
+            // Log the activity
+            ActivityLog::log(
+                'booking',
+                "Booking #{$booking->id} cancelled",
+                [
+                    'booking_id' => $booking->id,
+                    'reason' => 'Customer requested cancellation',
+                ],
+                false
+            );
             
             return response()->json([
                 'success' => true,

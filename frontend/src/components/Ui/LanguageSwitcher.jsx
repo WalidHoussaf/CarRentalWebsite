@@ -12,8 +12,8 @@ const LanguageSwitcher = () => {
       aria-label={language === 'en' ? 'Passer en français' : 'Switch to English'}
     >
       <img 
-        src={language === 'en' ? assets.frenchFlag : assets.ukFlag} 
-        alt={language === 'en' ? 'Drapeau français' : 'UK flag'} 
+        src={language === 'en' ? assets.ukFlag : assets.frenchFlag} 
+        alt={language === 'en' ? 'UK flag' : 'Drapeau français'} 
         className="w-full h-full object-cover"
       />
     </button>

@@ -1,7 +1,7 @@
-const API_URL = 'http://127.0.0.1:8000/api';
+export const API_URL = 'http://127.0.0.1:8000/api';
 
 // Helper function for making requests
-const fetchWithHeaders = async (url, options = {}) => {
+export const fetchWithHeaders = async (url, options = {}) => {
   const token = localStorage.getItem('auth_token');
   
   const headers = {
@@ -12,8 +12,10 @@ const fetchWithHeaders = async (url, options = {}) => {
   
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
-  } else if (!url.includes('/login') && !url.includes('/register')) {
-    // If no token and not trying to login/register, throw an error
+  } else if (!url.includes('/login') && !url.includes('/register') && 
+             !url.includes('/cars/available') && !url.includes('/cars/category') && 
+             !url.includes('/cars/') && !url.includes('/api/cars')) {
+    // If no token and not trying to access public endpoints, throw an error
     throw new Error('Authentication required. Please log in.');
   }
   
@@ -156,6 +158,128 @@ export const adminService = {
   deleteBooking: async (bookingId) => {
     return fetchWithHeaders(`${API_URL}/admin/bookings/${bookingId}`, {
       method: 'DELETE',
+    });
+  },
+
+  // Admin Car Management
+  getAllCars: async () => {
+    const data = await fetchWithHeaders(`${API_URL}/admin/cars`);
+    
+    // Check if the response has the expected structure
+    if (!data.data && Array.isArray(data)) {
+      // If the API is returning an array directly
+      return { data: data };
+    }
+    
+    return data;
+  },
+  
+  // Get a specific car
+  getCar: async (carId) => {
+    return fetchWithHeaders(`${API_URL}/admin/cars/${carId}`);
+  },
+  
+  // Create a new car
+  createCar: async (carData) => {
+    // Check if we have an image file to upload
+    if (carData.image instanceof File) {
+      const formData = new FormData();
+      
+      // Add all other car data to the form
+      Object.keys(carData).forEach(key => {
+        if (key === 'image') {
+          formData.append(key, carData[key]);
+        } else {
+          formData.append(key, carData[key]);
+        }
+      });
+      
+      // Use fetch directly for multipart/form-data
+      const token = localStorage.getItem('auth_token');
+      const headers = {};
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
+      const response = await fetch(`${API_URL}/admin/cars`, {
+        method: 'POST',
+        headers,
+        body: formData,
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to create car');
+      }
+      
+      return response.json();
+    }
+    
+    // Regular JSON request if no file is being uploaded
+    return fetchWithHeaders(`${API_URL}/admin/cars`, {
+      method: 'POST',
+      body: JSON.stringify(carData),
+    });
+  },
+  
+  // Update a car
+  updateCar: async (carId, carData) => {
+    // Check if we have an image file to upload
+    if (carData.image instanceof File) {
+      const formData = new FormData();
+      
+      // Add all other car data to the form
+      Object.keys(carData).forEach(key => {
+        if (key === 'image') {
+          formData.append(key, carData[key]);
+        } else {
+          formData.append(key, carData[key]);
+        }
+      });
+      
+      // Use fetch directly for multipart/form-data
+      const token = localStorage.getItem('auth_token');
+      const headers = {};
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
+      const response = await fetch(`${API_URL}/admin/cars/${carId}`, {
+        method: 'POST', // Laravel requires POST for form data
+        headers,
+        body: formData,
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to update car');
+      }
+      
+      return response.json();
+    }
+    
+    // Regular JSON request if no file is being uploaded
+    return fetchWithHeaders(`${API_URL}/admin/cars/${carId}`, {
+      method: 'PUT',
+      body: JSON.stringify(carData),
+    });
+  },
+  
+  // Delete a car
+  deleteCar: async (carId) => {
+    return fetchWithHeaders(`${API_URL}/admin/cars/${carId}`, {
+      method: 'DELETE',
+    });
+  },
+  
+  // Toggle car availability
+  toggleCarAvailability: async (carId) => {
+    return fetchWithHeaders(`${API_URL}/admin/cars/${carId}/toggle-availability`, {
+      method: 'PATCH',
     });
   },
 };

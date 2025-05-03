@@ -43,4 +43,12 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    /**
+     * Get the car associated with the booking.
+     */
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
 }

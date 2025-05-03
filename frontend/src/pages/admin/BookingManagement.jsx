@@ -683,13 +683,13 @@ const BookingManagement = () => {
               <table className="w-full text-left">
                 <thead>
                   <tr className="bg-cyan-900/30 border-b border-cyan-900/50">
-                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('bookingID')}</th>
-                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('customer')}</th>
-                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('car')}</th>
-                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('pickupDate')}</th>
-                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('returnDate')}</th>
+                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('admin_bookingID')}</th>
+                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('admin_customer')}</th>
+                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('admin_car')}</th>
+                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('admin_pickupDate')}</th>
+                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('admin_returnDate')}</th>
                     <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('status')}</th>
-                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('totalAmount')}</th>
+                    <th className="px-4 py-3 text-sm font-medium text-cyan-300 font-['Orbitron']">{t('admin_totalAmount')}</th>
                     <th className="px-4 py-3 text-sm font-medium text-cyan-300 text-right font-['Orbitron']">{t('actions')}</th>
                   </tr>
                 </thead>
@@ -772,7 +772,7 @@ const BookingManagement = () => {
                           <button
                             onClick={() => handleViewDetails(booking)}
                             className="p-2 bg-gray-800 hover:bg-gray-700 rounded text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer"
-                            title={t('viewBooking')}
+                            title={t('admin_viewBooking')}
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -782,7 +782,7 @@ const BookingManagement = () => {
                           <button
                             onClick={() => handleUpdateStatus(booking)}
                             className="p-2 bg-gray-800 hover:bg-gray-700 rounded text-yellow-400 hover:text-yellow-300 transition-colors cursor-pointer"
-                            title={t('updateStatus')}
+                            title={t('admin_updateStatus')}
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -813,7 +813,7 @@ const BookingManagement = () => {
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-start justify-center z-50 pt-20 px-4 pb-4 overflow-y-auto">
           <div className="bg-gray-900/90 rounded-xl border border-cyan-800/30 p-6 max-w-3xl w-full mt-2 mb-6">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-cyan-400 font-['Orbitron']">{t('bookingDetails')}</h2>
+              <h2 className="text-2xl font-bold text-cyan-400 font-['Orbitron']">{t('admin_bookingDetails')}</h2>
               <button 
                 onClick={() => setShowDetailsModal(false)}
                 className="text-gray-400 hover:text-white cursor-pointer"
@@ -827,18 +827,18 @@ const BookingManagement = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Booking Info */}
               <div className="bg-black/50 rounded-lg p-4 border border-cyan-900/30">
-                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('bookingDetails')}</h3>
+                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('admin_bookingDetails')}</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">{t('bookingID')}:</span>
+                    <span className="text-gray-400">{t('admin_bookingID')}:</span>
                     <span className="text-white">{selectedBooking.id}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">{t('bookingDate')}:</span>
+                    <span className="text-gray-400">{t('admin_bookingDate')}:</span>
                     <span className="text-white">{formatDate(selectedBooking.created_at)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">{t('pickupDate')}:</span>
+                    <span className="text-gray-400">{t('admin_pickupDate')}:</span>
                     <span className="text-white">{formatDate(getBookingProperty(selectedBooking, [
                       'pickup_date', 
                       'start_date', 
@@ -852,7 +852,7 @@ const BookingManagement = () => {
                     ]))}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">{t('returnDate')}:</span>
+                    <span className="text-gray-400">{t('admin_returnDate')}:</span>
                     <span className="text-white">{formatDate(getBookingProperty(selectedBooking, [
                       'return_date', 
                       'end_date', 
@@ -877,7 +877,7 @@ const BookingManagement = () => {
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">{t('totalAmount')}:</span>
+                    <span className="text-gray-400">{t('admin_totalAmount')}:</span>
                     <span className="text-white">{formatPrice(getBookingProperty(selectedBooking, [
                       'total_amount', 
                       'total_price', 
@@ -894,7 +894,7 @@ const BookingManagement = () => {
               
               {/* Customer Info */}
               <div className="bg-black/50 rounded-lg p-4 border border-cyan-900/30">
-                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('customerDetails')}</h3>
+                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('admin_customerDetails')}</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-gray-400">{t('name')}:</span>
@@ -913,29 +913,61 @@ const BookingManagement = () => {
               
               {/* Car Info */}
               <div className="bg-black/50 rounded-lg p-4 border border-cyan-900/30">
-                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('carDetails')}</h3>
+                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('admin_carDetails')}</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-gray-400">{t('car')}:</span>
+                    <span className="text-gray-400">{t('carName')}:</span>
                     <span className="text-white">{selectedBooking.car_name || 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">{t('dailyRate')}:</span>
+                    <span className="text-white">{formatPrice(selectedBooking.daily_rate || selectedBooking.car_daily_rate)}</span>
                   </div>
                 </div>
               </div>
               
-              {/* Options Info */}
+              {/* Booking Options */}
               <div className="bg-black/50 rounded-lg p-4 border border-cyan-900/30">
-                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('bookingOptions')}</h3>
-                {selectedBooking.options && Object.keys(selectedBooking.options).length > 0 ? (
-                  <div className="space-y-2">
-                    {Object.entries(selectedBooking.options).map(([key, value]) => (
-                      <div key={key} className="flex justify-between">
-                        <span className="text-gray-400">{t(`option_${key}`) || key}:</span>
-                        <span className="text-white">{formatPrice(value)}</span>
+                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('admin_bookingOptions')}</h3>
+                {selectedBooking.options && selectedBooking.options.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="text-gray-400 border-b border-gray-800 pb-1">{t('admin_optionName')}</div>
+                    <div className="text-gray-400 border-b border-gray-800 pb-1">{t('admin_optionPrice')}</div>
+                    {selectedBooking.options.map((option, i) => (
+                      <React.Fragment key={i}>
+                        <div className="text-white">{option.name}</div>
+                        <div className="text-white">{formatPrice(option.price)}</div>
+                      </React.Fragment>
+                    ))}
                       </div>
+                ) : (
+                  <p className="text-gray-400">{t('admin_noOptionsSelected')}</p>
+                )}
+              </div>
+              
+              {/* Status History */}
+              <div className="bg-black/50 rounded-lg p-4 border border-cyan-900/30">
+                <h3 className="text-cyan-400 font-medium mb-4 font-['Orbitron']">{t('admin_bookingStatusHistory')}</h3>
+                {selectedBooking.status_history && selectedBooking.status_history.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="text-gray-400 border-b border-gray-800 pb-1">{t('admin_statusDate')}</div>
+                    <div className="text-gray-400 border-b border-gray-800 pb-1">{t('admin_statusValue')}</div>
+                    {selectedBooking.status_history.map((history, i) => (
+                      <React.Fragment key={i}>
+                        <div className="text-white">{formatDate(history.date)}</div>
+                        <div className={`
+                          ${history.status === 'confirmed' ? 'text-green-400' : ''}
+                          ${history.status === 'pending' ? 'text-yellow-400' : ''}
+                          ${history.status === 'cancelled' ? 'text-red-400' : ''}
+                          ${history.status === 'completed' ? 'text-blue-400' : ''}
+                        `}>
+                          {t(history.status)}
+                        </div>
+                      </React.Fragment>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-400">{t('noOptionsSelected')}</p>
+                  <p className="text-gray-400">{t('noStatusHistory')}</p>
                 )}
               </div>
             </div>
@@ -963,123 +995,43 @@ const BookingManagement = () => {
       
       {/* Update Status Modal */}
       {showStatusModal && selectedBooking && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-start justify-center z-50 pt-20 px-4 pb-4 overflow-y-auto">
-          <div className="bg-gray-900/90 rounded-xl border border-cyan-800/30 p-6 max-w-md w-full mt-2 mb-6">
-            <h2 className="text-2xl font-bold text-cyan-400 mb-6 font-['Orbitron']">{t('updateBookingStatus')}</h2>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+          <div className="bg-gray-900/90 rounded-xl border border-cyan-800/30 p-6 max-w-md w-full">
+            <h2 className="text-2xl font-bold text-cyan-400 mb-4 font-['Orbitron']">{t('admin_updateBookingStatus')}</h2>
             
-            <div className="mb-6">
-              <label className="block text-sm font-medium mb-1 text-cyan-300 font-['Orbitron']">{t('status')}</label>
-              <div className="relative" style={{ zIndex: 100 }}>
-                <button
-                  type="button"
-                  ref={modalDropdownButtonRef}
-                  onClick={() => setModalDropdownOpen(!modalDropdownOpen)}
-                  className={`w-full flex items-center justify-between px-4 py-2 bg-black/60 border border-cyan-900/30 rounded-lg focus:outline-none hover:border-cyan-500/50 transition-all text-white font-['Orbitron'] relative ${modalDropdownOpen ? 'rounded-b-none border-b-0 border-cyan-900/50' : ''}`}
-                  style={{
-                    boxShadow: modalDropdownOpen ? 'none' : '0 0 10px rgba(6, 182, 212, 0.2)',
-                    position: 'relative',
-                    zIndex: 100,
-                    minWidth: '12rem' // Ensure minimum width
-                  }}
-                >
-                  <span className={`
-                    ${newStatus === 'pending' ? 'text-yellow-300' : ''}
-                    ${newStatus === 'confirmed' ? 'text-green-300' : ''}
-                    ${newStatus === 'cancelled' ? 'text-red-300' : ''}
-                    ${newStatus === 'completed' ? 'text-blue-300' : ''}
-                  `}>
-                    {t(newStatus)}
-                  </span>
-                  <svg
-                    className={`w-4 h-4 ml-2 transition-transform duration-200 text-cyan-400 ${modalDropdownOpen ? 'transform rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                
-                <PortalDropdown isOpen={modalDropdownOpen} buttonRef={modalDropdownButtonRef}>
-                  <div className="py-1 w-full">
-                    <button
-                      onClick={() => {
-                        setNewStatus('pending');
-                        setModalDropdownOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 text-sm font-['Orbitron'] text-yellow-300 hover:bg-yellow-900/20 hover:text-yellow-200 transition-colors flex items-center"
-                      style={{ paddingLeft: '16px', paddingRight: '16px' }}
-                    >
-                      {newStatus === 'pending' && <div className="w-2 h-2 rounded-full bg-yellow-400 mr-2"></div>}
-                      <span className={newStatus === 'pending' ? 'font-medium' : ''}>
-                        {t('pending')}
-                      </span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setNewStatus('confirmed');
-                        setModalDropdownOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 text-sm font-['Orbitron'] text-green-300 hover:bg-green-900/20 hover:text-green-200 transition-colors flex items-center"
-                      style={{ paddingLeft: '16px', paddingRight: '16px' }}
-                    >
-                      {newStatus === 'confirmed' && <div className="w-2 h-2 rounded-full bg-green-400 mr-2"></div>}
-                      <span className={newStatus === 'confirmed' ? 'font-medium' : ''}>
-                        {t('confirmed')}
-                      </span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setNewStatus('cancelled');
-                        setModalDropdownOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 text-sm font-['Orbitron'] text-red-300 hover:bg-red-900/20 hover:text-red-200 transition-colors flex items-center"
-                      style={{ paddingLeft: '16px', paddingRight: '16px' }}
-                    >
-                      {newStatus === 'cancelled' && <div className="w-2 h-2 rounded-full bg-red-400 mr-2"></div>}
-                      <span className={newStatus === 'cancelled' ? 'font-medium' : ''}>
-                        {t('cancelled')}
-                      </span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setNewStatus('completed');
-                        setModalDropdownOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-2 text-sm font-['Orbitron'] text-blue-300 hover:bg-blue-900/20 hover:text-blue-200 transition-colors flex items-center"
-                      style={{ paddingLeft: '16px', paddingRight: '16px' }}
-                    >
-                      {newStatus === 'completed' && <div className="w-2 h-2 rounded-full bg-blue-400 mr-2"></div>}
-                      <span className={newStatus === 'completed' ? 'font-medium' : ''}>
-                        {t('completed')}
-                      </span>
-                    </button>
-                  </div>
-                </PortalDropdown>
-              </div>
+            <div className="mb-4">
+              <label className="block text-gray-400 mb-2">{t('status')}</label>
+              <select
+                value={newStatus}
+                onChange={(e) => setNewStatus(e.target.value)}
+                className="w-full px-4 py-2 bg-black/60 border border-cyan-900/30 rounded-lg focus:outline-none focus:border-cyan-500 transition-all text-white"
+              >
+                <option value="pending">{t('admin_pending')}</option>
+                <option value="confirmed">{t('admin_confirmed')}</option>
+                <option value="cancelled">{t('admin_cancelled')}</option>
+                <option value="completed">{t('admin_completed')}</option>
+              </select>
             </div>
             
-            <div className="flex justify-end space-x-4">
+            <div className="flex justify-end space-x-3 mt-6">
               <button
                 onClick={() => setShowStatusModal(false)}
-                className="px-4 py-2 border border-gray-700 text-gray-300 rounded-md hover:bg-gray-800 transition-colors font-['Orbitron'] cursor-pointer"
-                disabled={processing}
+                className="px-4 py-2 bg-gray-800 text-gray-300 rounded-md hover:bg-gray-700 transition-colors font-['Orbitron']"
               >
                 {t('cancel')}
               </button>
               <button
                 onClick={handleStatusSubmit}
-                className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-cyan-700 hover:from-cyan-500 hover:to-cyan-600 rounded-md text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center font-['Orbitron'] cursor-pointer"
+                className="px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition-colors font-['Orbitron']"
                 disabled={processing}
               >
                 {processing ? (
                   <>
-                    <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+                    <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2 inline-block"></div>
                     {t('processing')}
                   </>
                 ) : (
-                  <>{t('updateStatus')}</>
+                  t('update')
                 )}
               </button>
             </div>
@@ -1089,31 +1041,24 @@ const BookingManagement = () => {
       
       {/* Delete Confirmation Modal */}
       {showDeleteModal && selectedBooking && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-start justify-center z-50 pt-20 px-4 pb-4 overflow-y-auto">
-          <div className="bg-gray-900/90 rounded-xl border border-red-800/30 p-6 max-w-md w-full mt-2 mb-6">
-            <div className="text-center">
-              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-900/20 mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </div>
-              <h2 className="text-xl text-center font-bold text-white mb-2 font-['Orbitron']">{t('confirmDelete')}</h2>
-              <p className="text-gray-400 text-center mb-6">
-                {t('confirmDeleteBooking')}
-              </p>
-            </div>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+          <div className="bg-gray-900/90 rounded-xl border border-red-800/30 p-6 max-w-md w-full">
+            <h2 className="text-2xl font-bold text-red-400 mb-4 font-['Orbitron']">{t('confirmDelete')}</h2>
             
-            <div className="flex justify-center space-x-4">
+            <p className="text-gray-300 mb-6">
+              {t('admin_confirmDeleteBooking')}
+            </p>
+            
+            <div className="flex justify-end space-x-3">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="px-6 py-2 border border-gray-700 text-gray-300 rounded-md hover:bg-gray-800 transition-colors font-['Orbitron'] cursor-pointer"
-                disabled={processing}
+                className="px-4 py-2 bg-gray-800 text-gray-300 rounded-md hover:bg-gray-700 transition-colors font-['Orbitron']"
               >
                 {t('cancel')}
               </button>
               <button
                 onClick={handleDelete}
-                className="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors font-['Orbitron'] cursor-pointer"
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors font-['Orbitron']"
                 disabled={processing}
               >
                 {processing ? (
@@ -1122,7 +1067,7 @@ const BookingManagement = () => {
                     {t('processing')}
                   </>
                 ) : (
-                  <>{t('delete')}</>
+                  t('delete')
                 )}
               </button>
             </div>

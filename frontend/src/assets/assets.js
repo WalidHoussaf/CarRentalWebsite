@@ -869,19 +869,64 @@ export const locations = [
 
 // Features for filter
 export const featureOptions = [
-  { value: 'leather seats', label: { en: 'Leather Seats', fr: 'Sièges en Cuir' } },
-  { value: 'panoramic roof', label: { en: 'Panoramic Roof', fr: 'Toit Panoramique' } },
-  { value: 'driver assistance', label: { en: 'Driver Assistance', fr: 'Assistance à la Conduite' } },
-  { value: 'air suspension', label: { en: 'Air Suspension', fr: 'Suspension Pneumatique' } },
-  { value: 'heated seats', label: { en: 'Heated Seats', fr: 'Sièges Chauffants' } },
-  { value: 'premium sound system', label: { en: 'Premium Sound System', fr: 'Système Audio Premium' } },
-  { value: 'adaptive suspension', label: { en: 'Adaptive Suspension', fr: 'Suspension Adaptative' } },
-  { value: 'autopilot', label: { en: 'Autopilot', fr: 'Pilote Automatique' } },
-  { value: 'all-wheel drive', label: { en: 'All-Wheel Drive', fr: 'Transmission Intégrale' } },
-  { value: 'massage seats', label: { en: 'Massage Seats', fr: 'Sièges Massants' } },
-  { value: 'carbon fiber', label: { en: 'Carbon Fiber Components', fr: 'Composants en Fibre de Carbone' } },
-  { value: 'turbo', label: { en: 'Turbo Engine', fr: 'Moteur Turbo' } },
-  { value: 'v8', label: { en: 'V8 Engine', fr: 'Moteur V8' } },
-  { value: 'ventilated seats', label: { en: 'Ventilated Seats', fr: 'Sièges Ventilés' } },
-  { value: 'head-up display', label: { en: 'Head-Up Display', fr: 'Affichage Tête Haute' } }
+  { 
+    value: 'leather', 
+    label: { en: 'Leather Seats', fr: 'Sièges en Cuir' },
+    keywords: ['leather', 'grain']
+  },
+  { 
+    value: 'sound system', 
+    label: { en: 'Premium Sound System', fr: 'Système Audio Premium' },
+    keywords: ['audio', 'sound', 'harman kardon']
+  },
+  { 
+    value: 'air conditioning', 
+    label: { en: 'Air Conditioning', fr: 'Climatisation' },
+    keywords: ['air conditioning', 'climate']
+  },
+  { 
+    value: 'suspension', 
+    label: { en: 'Advanced Suspension', fr: 'Suspension Avancée' },
+    keywords: ['suspension', 'air ride', 'adaptive', 'skyhook']
+  },
+  { 
+    value: 'automatic', 
+    label: { en: 'Automatic Transmission', fr: 'Transmission Automatique' },
+    keywords: ['automatic', 'dual-clutch', 'auto']
+  },
+  { 
+    value: 'navigation', 
+    label: { en: 'GPS Navigation', fr: 'Navigation GPS' },
+    keywords: ['gps', 'navigation', 'nav']
+  },
+  { 
+    value: 'bluetooth', 
+    label: { en: 'Bluetooth', fr: 'Bluetooth' },
+    keywords: ['bluetooth']
+  },
+  { 
+    value: 'carbon fiber', 
+    label: { en: 'Carbon Fiber', fr: 'Fibre de Carbone' },
+    keywords: ['carbon', 'fiber']
+  },
+  { 
+    value: 'v8', 
+    label: { en: 'V8 Engine', fr: 'Moteur V8' },
+    keywords: ['v8']
+  },
+  { 
+    value: 'turbo', 
+    label: { en: 'Turbo Engine', fr: 'Moteur Turbo' },
+    keywords: ['turbo', 'twin-turbo']
+  },
+  { 
+    value: 'horsepower', 
+    label: { en: 'High Horsepower', fr: 'Puissance Élevée' },
+    keywords: ['horsepower', 'hp']
+  },
+  { 
+    value: 'usb', 
+    label: { en: 'USB Port', fr: 'Port USB' },
+    keywords: ['usb']
+  }
 ];

@@ -582,7 +582,7 @@ const UserManagement = () => {
       return (
         <div className="min-h-screen bg-black text-white pt-20 pb-12 px-4">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl font-['Orbitron'] text-cyan-400 mb-6">Debug Authentication</h1>
+            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-400 font-['Orbitron'] mb-6">Debug Authentication</h1>
             
             <div className="bg-gray-900/50 border border-cyan-900/30 rounded-lg p-6 mb-8">
               <h2 className="text-xl text-cyan-400 mb-4">Auth State:</h2>
